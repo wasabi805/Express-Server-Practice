@@ -1,11 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser=require('body-parser'); //see './models/User.js' line 30
 
 const app=express();
 
 const users=require('./routes/api/users');
 const profile=require('./routes/api/profile');
 const posts=require('./routes/api/posts');
+
+
+//Body parser middleware
+app.use(bodyParser.urlencoded({extended: false})); //see './models/User.js' line 29
+app.use(bodyParser.json()); //see './models/User.js' line 29
 
 
 
