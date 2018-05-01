@@ -9,24 +9,22 @@ const bcrypt = require('bcryptjs');
 const User = require('../../models/User');
 
 
-//@ROUTES GET api/users/test
-//@desc test user
-//@access PUBLIC
+//@ROUTES   GET api/users/test
+//@desc     test user
+//@access   PUBLIC
 
 router.get('/test', (req,res)=>{
     res.json({msg: "Users WORKS!!"}) //.json() puts our res from cb into JSON format
 } );
 
 
-//@ROUTES GET api/users/register
-//@desc Registers a user
-//@access PUBLIC
+//@ROUTES   GET api/users/register
+//@desc     Registers a user
+//@access   PUBLIC
 
 
 router.post('/register', (req,res)=>{
-    //first, will use mongoose to see if the email exists: User from model we imported at line 7 from this file
-    //second, in order to use 'body', need to bring it into this file: already installed body-parser which is where it comes from
-    //third, make sure that const bodyParser=require('body-parser'); is inside server.js (line 3 && lines 13-14)
+
     User.findOne({email: req.body.email})
         .then(user=>{
             if(user){
@@ -56,6 +54,36 @@ router.post('/register', (req,res)=>{
                 })
             }
         })
+});
+
+//@ROUTES   GET api/users/login
+//@desc     LOGIN User / return JSON Web Token
+//@access   PUBLIC
+
+router.post('/login', (req, res)=>{
+    const email = req.body.email;
+    const password = req.body.password;
+    //NOW, find the user by email
+
+    User.findOne({email: email})//value is from const email = req.body.email
+        .then(user=>{
+            //check for user
+            if(!user){
+                return res.status(400).json({email:'user not found'}) //return error code and value for email = 'user not found'
+            }
+            //next, if user IS found, check their pw : NOTE, remember the pw in db is hashed so, we still need bcrypt for verification
+            bcrypt.compare(password, user.password)//compare password(const from ln 65 vs. pw from db=> user.password): .compare evaluates to true or false
+                .then(isMatch=>{
+                    if(isMatch){
+                        res.json({msg: 'Success'})
+                    }
+                    else{
+                        return res.status(400).json({password: 'Password incorrect'})
+                    }
+                })
+
+        });
+
 });
 
 //export the router
