@@ -4,6 +4,8 @@ const express =require('express');
 const router = express.Router();
 const gravatar =require('gravatar');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const keys = require('../../config/keys');
 
 //Load the User Model
 const User = require('../../models/User');
@@ -69,13 +71,37 @@ router.post('/login', (req, res)=>{
         .then(user=>{
             //check for user
             if(!user){
-                return res.status(400).json({email:'user not found'}) //return error code and value for email = 'user not found'
+                return res.status(400).json({email:'user not found'})
             }
-            //next, if user IS found, check their pw : NOTE, remember the pw in db is hashed so, we still need bcrypt for verification
+
             bcrypt.compare(password, user.password)//compare password(const from ln 65 vs. pw from db=> user.password): .compare evaluates to true or false
                 .then(isMatch=>{
                     if(isMatch){
-                        res.json({msg: 'Success'})
+                        // res.json({msg: 'Success'});
+
+                        //create the payload to pass into jwt.sign()
+                        const payload={
+                            id: user.id,
+                            name: user.name,
+                            avatar: user.avatar
+                        };
+
+                        //Sign Token / create the token
+                        // 1st arg is from above,
+                        // 2nd arg is the key ==> key placed in './config/keys.js', see ln 8 of this file.
+                        // 3rd arg is the time key expires
+                        // 4th arg is cb
+                        jwt.sign(
+                            payload,
+                            keys.secretOrKey,
+                            {expiresIn: 3600},//3600 = 1 hour
+                            (err, token)=>{
+                                res.json({
+                                    success: true,
+                                    token: 'Bearer' + token //Bearer is a type of token with it's own protocol
+                                    //NOTE: on success, token will go into the header as auth.(Will cover later)
+                                });
+                        });
                     }
                     else{
                         return res.status(400).json({password: 'Password incorrect'})
