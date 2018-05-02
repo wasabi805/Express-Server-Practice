@@ -11,21 +11,24 @@ const passport = require('passport');
 //Load the User Model
 const User = require('../../models/User');
 
+//LOAD Input Validation : brings in the register.js file
 
+const validateRegisterInput = require('../../validation/register'); // <== import /validation/register.js
 
-//@ROUTES   GET api/users/test
-//@desc     test user
-//@access   PUBLIC
-
-router.get('/test', (req,res)=>{
-    res.json({msg: "Users WORKS!!"})
-} );
 
 //@ROUTES   GET api/users/register
 //@desc     Registers a user
 //@access   PUBLIC
 
 router.post('/register', (req,res)=>{
+    //req.body is everything(name, email, pw) that is sent to this route
+    const{errors, isValid} = validateRegisterInput(req.body); //// <==  func(data) imported from /validation/register.js :
+
+    //Check Validation
+    if(!isValid){
+        return res.status(400).json(errors); //return the entire errors obj <== return the errors obj inside validateRegisterInput(data) from /validation/register.js :
+    }
+
 
     User.findOne({email: req.body.email})
         .then(user=>{
@@ -113,10 +116,8 @@ router.post('/login', (req, res)=>{
 //@access   PRIVATE
 
 //1st arg = name of route
-//2nd arg = authentication method which takes args 'jwt == ln 8 of this file && no session used
+//2nd arg = authentication method which takes args 'jwt == ln 7 of this file && no session used
 //3rd arg = cb of res && req
-
-
 
 router.get('/current', passport.authenticate('jwt', {session:false}),
     (req,res)=>{
