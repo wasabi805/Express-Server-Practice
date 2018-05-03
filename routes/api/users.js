@@ -13,8 +13,8 @@ const User = require('../../models/User');
 
 //LOAD Input Validation : brings in the register.js file
 
-const validateRegisterInput = require('../../validation/register'); // <== import /validation/register.js
-
+const validateRegisterInput = require('../../validation/register');
+const validateLoginInput = require('../../validation/login');       // <== import /validation/login.js
 
 //@ROUTES   GET api/users/register
 //@desc     Registers a user
@@ -22,13 +22,12 @@ const validateRegisterInput = require('../../validation/register'); // <== impor
 
 router.post('/register', (req,res)=>{
     //req.body is everything(name, email, pw) that is sent to this route
-    const{errors, isValid} = validateRegisterInput(req.body); //// <==  func(data) imported from /validation/register.js :
+    const{errors, isValid} = validateRegisterInput(req.body); // func(data) imported from /validation/register.js :
 
     //Check Validation
     if(!isValid){
-        return res.status(400).json(errors); //return the entire errors obj <== return the errors obj inside validateRegisterInput(data) from /validation/register.js :
+        return res.status(400).json(errors); //returns the errors obj inside validateRegisterInput(data) from /validation/register.js
     }
-
 
     User.findOne({email: req.body.email})
         .then(user=>{
@@ -66,20 +65,37 @@ router.post('/register', (req,res)=>{
         })
 });
 
-//@ROUTES   GET api/users/login
+//@ROUTES   POST api/users/login
 //@desc     LOGIN User / return JSON Web Token
 //@access   PUBLIC
 
 router.post('/login', (req, res)=>{
     const email = req.body.email;
     const password = req.body.password;
+
+
+    const{errors, isValid} = validateLoginInput(req.body);                  // <== import errors{} and isValid
+
+    console.log(email, 'from /login, users.js');
+    console.log(isValid, 'isValid from /login users.js');
+    //Check Validation
+    if(!isValid){                                                           // <== return errors{} if errors
+        return res.status(400).json(errors);
+    }
+
     //NOW, find the user by email
 
-    User.findOne({email: email})//value is from const email = req.body.email
+    User.findOne({email : email})//value is from const email = req.body.email
+
         .then(user=>{
             //check for user
+
             if(!user){
-                return res.status(400).json({email:'user not found'})
+
+                console.log(user, ': user')
+                // return res.status(400).json({email:'user not found'})
+                errors.email = 'User not found.';                           // <== add msg to errors{}
+                return res.status(404).json(errors)                         // <== return that error{}
             }
 
             //check Password
@@ -87,6 +103,7 @@ router.post('/login', (req, res)=>{
 
                     if(isMatch){
                         //User Match
+
                         const payload={
                             id: user.id, name: user.name, avatar: user.avatar
                         };
@@ -103,8 +120,10 @@ router.post('/login', (req, res)=>{
                             }
                         );
                     }
+
                     else{
-                        return res.status(400).json({password: 'Password incorrect'})
+                        errors.password = 'Password incorrect.';            //<== add msg to errors{}
+                        return res.status(400).json(errors)                 //<=== return errors{}
                     }
                 });
         });
