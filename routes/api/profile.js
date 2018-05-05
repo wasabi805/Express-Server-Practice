@@ -35,7 +35,9 @@ router.get('/', passport.authenticate('jwt', {session: false}, (req, res)=>{
             console.log("User_id: ", res._id);
             // console.log("REQ-Param", req.query.id);
 
-            res.json({status: "success"});
+            // res.json({status: "success"});
+
+
 
             // Profile.findOne({user: res._id}).then(profile =>{
             //     console.log("in the response", profile)
