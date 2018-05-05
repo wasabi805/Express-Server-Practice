@@ -92,7 +92,7 @@ router.post('/login', (req, res)=>{
 
             if(!user){
 
-                console.log(user, ': user')
+                console.log(user, ': user');
                 // return res.status(400).json({email:'user not found'})
                 errors.email = 'User not found.';                           // <== add msg to errors{}
                 return res.status(404).json(errors)                         // <== return that error{}
@@ -111,7 +111,7 @@ router.post('/login', (req, res)=>{
                         jwt.sign(
                             payload,
                             keys.secretOrKey,
-                            { expiresIn: 7200 },
+                            { expiresIn: '1hr' },
                             (err, token)=>{
                                 res.json({
                                     success: true,
