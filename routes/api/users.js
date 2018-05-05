@@ -140,6 +140,7 @@ router.post('/login', (req, res)=>{
 
 router.get('/current', passport.authenticate('jwt', {session:false}),
     (req,res)=>{
+    console.log(req.user, ";hfhhafh'eoqfhouefhuoefq;")
     // res.json({msg: 'success from users.js, ln 121'});
     //     res.json(req.user) //remember that user is already in the req arg : see config/passport.js ==> .then(user)
 

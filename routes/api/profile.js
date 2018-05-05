@@ -25,29 +25,45 @@ router.get('/test', (req,res)=>{
 //@desc  get current user's profile
 //@access Private
 
+router.get('/nickishomo', passport.authenticate('jwt', {session:false}),
+    (req,res)=>{
 
-router.get('/', passport.authenticate('jwt', {session: false}, (req, res)=>{
+        console.log("------------------------",req.user.id)
+
+        Profile.findOne({user: req.user.id}).then(profile =>{
+            console.log("in the response", profile)
+            if(!profile){
+                errors.noprofile ="There is no profile for this user";
+                return  res.status(404).json(errors)
+            }
+            res.json(profile);
+        }).catch(err=> res.status(404).json(err))
+
+    }
+);
+
+
+router.get('/', passport.authenticate('jwt', {session: false}),
+    (req, res)=> {
 
             const errors={};
-            console.log('hello from profile');
-            console.log("REQ - ", req);
-            console.log("RES - ", res);
-            console.log("User_id: ", res._id);
-            // console.log("REQ-Param", req.query.id);
-
+            // console.log('hello from profile');
+            // console.log("REQ.user - ", req.user);
             // res.json({status: "success"});
 
 
 
-            // Profile.findOne({user: res._id}).then(profile =>{
-            //     console.log("in the response", profile)
-            //     if(!profile){
-            //         errors.noprofile ="There is no profile for this user";
-            //         return  res.status(404).json(errors)
-            //     }
-            //     res.json(profile);
-            // }).catch(err=> res.status(404).json(err))
-}));
+            Profile.findOne({user: req.user.id}).then(profile =>{
+                console.log("from the response '/' profile.js,", profile);
+
+                if(!profile){
+                    errors.noprofile ="There is no profile for this user";
+                    return  res.status(404).json(errors)
+                }
+                res.json(profile);
+            }).catch(err=> res.status(404).json(err))
+        }
+);
 
 
 module.exports=router;
