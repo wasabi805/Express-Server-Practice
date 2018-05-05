@@ -25,24 +25,6 @@ router.get('/test', (req,res)=>{
 //@desc  get current user's profile
 //@access Private
 
-router.get('/nickishomo', passport.authenticate('jwt', {session:false}),
-    (req,res)=>{
-
-        console.log("------------------------",req.user.id)
-
-        Profile.findOne({user: req.user.id}).then(profile =>{
-            console.log("in the response", profile)
-            if(!profile){
-                errors.noprofile ="There is no profile for this user";
-                return  res.status(404).json(errors)
-            }
-            res.json(profile);
-        }).catch(err=> res.status(404).json(err))
-
-    }
-);
-
-
 router.get('/', passport.authenticate('jwt', {session: false}),
     (req, res)=> {
 
@@ -50,8 +32,6 @@ router.get('/', passport.authenticate('jwt', {session: false}),
             // console.log('hello from profile');
             // console.log("REQ.user - ", req.user);
             // res.json({status: "success"});
-
-
 
             Profile.findOne({user: req.user.id}).then(profile =>{
                 console.log("from the response '/' profile.js,", profile);
@@ -65,34 +45,6 @@ router.get('/', passport.authenticate('jwt', {session: false}),
         }
 );
 
-
 module.exports=router;
 
 
-
-// router.get(
-//     '/', passport.authenticate(
-//         'jwt', {session: false},                    //<=== 1st arg needed for authentication
-//         (req, res)=>{
-//
-//             const errors={};                        //<=== initialize the errors object
-//
-//
-//             Profile.findOne({user: req.user.id})    //<=== remember: after authentication, logged in user's data should be inside the user arg from the login route in users.js
-//                 .then(profile =>{
-//                     //If the user profile doesn't exist
-//                     if(!profile){
-//                         errors.noprofile =          //<=== define the error
-//                             "There is no profile for this user";
-//                         return  res.status(404).json(errors);//<=== pass in the error var
-//                     }
-//                     //if the profile DOES exist, pass back the logged in user's profile.
-//                     res.json(profile);
-//                 })
-//                 //if something goes wrong while trying to retrieve the logged in user's profile.
-//                 .catch(err=> res.status(404).json(err))
-//
-//         }));
-//
-//
-// module.exports=router;
