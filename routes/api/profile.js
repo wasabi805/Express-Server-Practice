@@ -51,6 +51,75 @@ router.get('/', passport.authenticate('jwt', {session: false}),
 );
 
 
+//@ROUTES GET api/profile/handle/:handle
+//@desc  Get profile by handle
+//@access Public ==> because anyone should be able to see a profile
+//Note: Can always change this to private if you want only logged-in users to have access to profiles
+
+router.get('/handle/:handle', (req,res)=>{
+
+    const errors={};
+
+    Profile.findOne({handle: req.params.handle})
+        .populate('user',['name', 'avatar'])
+        .then(profile=>{
+            if(!profile){
+                errors.noprofile='There is no profile for this user.';
+                res.status(404).json(errors)
+            }
+
+            res.json(profile);
+
+        }).catch(err=>res.status(404).json(err))
+});
+
+
+//@ROUTES GET api/profile/user/:user_id
+//@desc  Get profile by user ID
+//@access Public
+
+router.get('/user/:user_id', (req,res)=>{
+
+    const errors={};
+
+    Profile.findOne({user: req.params.user_id})
+        .populate('user',['name', 'avatar'])
+        .then(profile=>{
+            if(!profile){
+                errors.noprofile='There is no profile for this user.';
+                res.status(404).json(errors)
+            }
+
+            res.json(profile);
+
+        }).catch(err=>res.status(404).json({profile: "There is no profile for this user.(From Catch)"}))
+});
+
+
+//@ROUTES GET api/profile/all
+//@desc  Get ALL user profiles
+//@access Public
+
+router.get('/all', (req, res)=>{
+
+    const errors = {};
+
+    Profile.find()
+        .populate('user', ['names', 'avatar'])
+        .then(profiles=>{
+            if(!profiles){
+                errors.noprofile = 'There are no profile for this user.';
+                return res.status(404).json(errors);
+            }
+            res.json(profiles);
+        })
+        .catch(
+            err=> res.status(400).json({profile: "There are no profile for this user. (From Catch)"}));
+});
+
+
+
+
 //@ROUTES POST api/profile
 //@desc  CREATE or EDIT user profile
 //@access Private
