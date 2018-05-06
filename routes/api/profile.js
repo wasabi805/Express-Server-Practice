@@ -10,6 +10,9 @@ const Profile = require('../../models/Profile');    //<=== bring in the Profile 
 //Load user profile
 const User = require('../../models/User');          //<=== bring in the User Schema
 
+//Load Validation
+const validateProfileInput= require('../../validation/profile');
+
 
 
 //@ROUTES GET api/profile/test
@@ -33,7 +36,9 @@ router.get('/', passport.authenticate('jwt', {session: false}),
             // console.log("REQ.user - ", req.user);
             // res.json({status: "success"});
 
-            Profile.findOne({user: req.user.id}).then(profile =>{
+            Profile.findOne({user: req.user.id})
+                .populate('user',['name','avatar']) // populates the profile from user key inside the Profile.js Schema.
+                .then(profile =>{
                 console.log("from the response '/' profile.js,", profile);
 
                 if(!profile){
@@ -52,7 +57,18 @@ router.get('/', passport.authenticate('jwt', {session: false}),
 
 router.post('/', passport.authenticate('jwt', {session: false}),
     (req, res)=> {
-    //GET FIELDS - NOTE: The fields we'll post are in req.body
+
+        //For Validation errors
+        const {errors, isValid} = validateProfileInput(req.body);
+
+        //Check the validations
+        if(!isValid){
+            //Return any errors with 400 status
+            return res.status(400).json(errors);
+        }
+
+
+        //GET FIELDS - NOTE: The fields we'll post are in req.body
         const profileFields={};
 
         profileFields.user = req.user.id;
@@ -66,8 +82,11 @@ router.post('/', passport.authenticate('jwt', {session: false}),
         if(req.body.bio) profileFields.bio = req.body.bio;
         if(req.body.githubusername) profileFields.githubusername = req.body.githubusername;
 
+        //Status:
+        if(req.body.status) profileFields.status= req.body.status;
+
         //SKIlls : Remember that this is an array
-        if(typeof req.body.skills != undefined){
+        if(typeof req.body.skills !== 'undefined'){
             profileFields.skills= req.body.skills.split(",")
         }
         //SOCIAL : social is inside its own objects
@@ -81,33 +100,36 @@ router.post('/', passport.authenticate('jwt', {session: false}),
         if(req.body.instagram) profileFields.instagram = req.body.instagram;
 
         //FIND THE USER
+        console.log('looking for user', req.user.id);
         Profile.findOne({user: req.user.id})
+
             .then(profile=>{
+
                 if(profile){
                     //if the profile exists, i'd want to UPDATE it, NOT create a new one.
                     Profile.findOneAndUpdate(
                         {user: req.user.id},
                         {$set: profileFields},
-                        {new: true})
-                        .then(profile=>{res.json(profile)});
+                        {new: true}
+                        )
+                        .then(profile=> res.json(profile));
                 }
                 else{
                     //Create
-                    //1st, Check if the handle exists to prevent creating multiple db entries of the same user.
-                    Profile.findOne({handle: profileFields.handle})
-                        .then(profile=>{
+                    //Check if the handle exists to prevent creating multiple db entries of the same user.
+
+                    Profile.findOne({handle: profileFields.handle}).then(profile=>{
                             if(profile){
                                 errors.handle='This handle already exists';
                                 res.status(400).json(errors);
                             }
-                            //Save Profile
+                            console.log('saving new profile');
 
-                            new Profile(profileFields.save().then(profile=>{
-                                res.json(profile)
-                            }))
+                            //Save Profile
+                            new Profile(profileFields).save().then(profile=> res.json(profile));
                         });
                 }
-            })
+            });
     }
 );
 
