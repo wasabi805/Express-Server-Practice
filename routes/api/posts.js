@@ -103,6 +103,66 @@ router.delete('/:id', passport.authenticate('jwt', {session: false}),
     });
 
 
+//@ROUTES   POST api/posts/like/:id
+//@desc     Make a like on another users' post
+//@access   Private
+
+router.post('/like/:id', passport.authenticate('jwt', {session: false}),
+    (req,res)=>{
+
+        Profile.findOne({user: req.user.id}).then(profile=>{
+            Post.findById(req.params.id).then(post=>{
+
+                //check to see if logged in user previously made a like to the post
+
+                //if the user's id is already inside the likes array from the Post model
+                if(post.likes.filter(like => like.user.toString() === req.user.id).length > 0 ){
+                    return  res.status(400).json({alreadyliked: 'User already liked this post'})
+                }
+
+                //else.. put the user id in the likes array
+                post.likes.unshift({user: req.user.id});
+
+                post.save().then(post=>res.json(post));
+
+            })
+        })
+    });
+
+//@ROUTES   POST api/posts/unlike/:id
+//@desc     Make a UNLIKE on another users' post
+//@access   Private
+
+router.post('/unlike/:id', passport.authenticate('jwt', {session: false}),
+    (req,res)=>{
+
+        Profile.findOne({user: req.user.id}).then(profile=>{
+            Post.findById(req.params.id).then(post=>{
+
+                //check to see if logged in user previously made a like to the post
+
+                //if post.likes ===0 , the user hasn't made a like yet
+                if(post.likes.filter(like => like.user.toString() === req.user.id).length === 0 ){
+                    return  res.status(400).json({notliked: 'You have not made a like for this post.'})
+                }
+
+                // GET the remove index of user
+                const removeIndex = post.likes
+                   .map(item=> item.user.toString).indexOf(req.user.id);
+
+                //Splice that user out of the likes array
+                post.likes.splice(removeIndex,1);
+
+                //once removed, SAVE the change
+                post.save().then(post=> res.json(post))
+
+
+
+            }).catch(err => res.json({likenotfound: 'No likes found(from catch).'}))
+        });
+    });
+
+
 
 
 
