@@ -12,7 +12,8 @@ const User = require('../../models/User');          //<=== bring in the User Sch
 
 //Load Validation
 const validateProfileInput= require('../../validation/profile');
-
+const validateExperienceInput = require('../../validation/experience');
+const validateEducationInput = require('../../validation/education');
 
 
 //@ROUTES GET api/profile/test
@@ -201,6 +202,85 @@ router.post('/', passport.authenticate('jwt', {session: false}),
             });
     }
 );
+
+//@ROUTES POST api/profile/experience
+//@desc  Adds experience to profile for logged in user
+//@access Private
+
+
+router.post('/experience', passport.authenticate("jwt", {session: false}), (req,res)=>{
+
+    const {errors, isValid} = validateExperienceInput(req.body);
+    console.log(req.body);
+    //Check the validations
+    if(!isValid){
+        //Return any errors with 400 status
+        return res.status(400).json(errors);
+    }
+
+   Profile.findOne({user: req.user.id})
+       .then(profile=>{
+           const newExp={
+               title : req.body.title,
+               company: req.body.company,
+               location: req.body.location,
+               from: req.body.from,
+               to: req.body.to,
+               current: req.body.current,
+               description: req.body.description
+           };
+
+           //Add to experience array
+           // profile.experience=[]; //cleans out experience array
+
+           profile.experience.unshift(newExp); //add to beginning of the array
+
+
+           profile.save().then(profile=>res.json(profile)) //adds the experience and return the profile
+
+       })
+});
+
+
+//@ROUTES POST api/profile/education
+//@desc  Adds experience to profile for logged in user
+//@access Private
+
+
+router.post('/education', passport.authenticate("jwt", {session: false}), (req,res)=>{
+    console.log(req.body, '<====================req.body from /education');
+    const {errors, isValid} = validateEducationInput(req.body);
+
+    //Check the validations
+    if(!isValid){
+        //Return any errors with 400 status
+        return res.status(400).json(errors);
+    }
+
+    Profile.findOne({user: req.user.id})
+        .then(profile=>{
+            const newEdu={
+                school : req.body.school,
+                degree: req.body.degree,
+                fieldofstudy: req.body.fieldofstudy,
+                from: req.body.from,
+                to: req.body.to,
+                current: req.body.current,
+                description: req.body.description
+            };
+
+            //Add to experience array
+            // profile.experience=[]; //cleans out experience array
+
+            profile.education.unshift(newEdu); //add to beginning of the array
+
+
+            profile.save().then(profile=>res.json(profile)) //adds the experience and return the profile
+
+        })
+});
+
+
 
 module.exports=router;
 
