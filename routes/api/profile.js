@@ -281,6 +281,70 @@ router.post('/education', passport.authenticate("jwt", {session: false}), (req,r
 });
 
 
+//@ROUTES DELETE api/profile/experience/:exp_id
+//@desc  deletes experience to profile for logged in user
+//@access Private
+
+
+router.delete('/experience/:exp_id', passport.authenticate("jwt", {session: false}), (req,res)=>{
+    //Note: don't need to validate the delete route.
+
+    Profile.findOne({user: req.user.id})
+
+        .then(profile=>{
+            //GET remove index with map()
+            const removeIndex = profile.experience.map(item=>item.id).indexOf(req.params.exp_id);
+
+            //Splice: once we het the id, we want to return the experience
+            profile.experience.splice(removeIndex,1);
+
+            profile.save().then(profile=>res.json(profile));
+        })
+
+        .catch(err=>res.status(404).json(err))
+});
+
+
+//@ROUTES DELETE api/profile/education/:edu_id
+//@desc  deletes education to profile for logged in user
+//@access Private
+
+
+router.delete('/education/:edu_id', passport.authenticate("jwt", {session: false}), (req,res)=>{
+    //Note: don't need to validate the delete route.
+
+    Profile.findOne({user: req.user.id})
+
+        .then(profile=>{
+            //GET remove index with map()
+            const removeIndex = profile.education.map(item=>item.id).indexOf(req.params.edu_id);
+
+            //Splice: once we het the id, we want to return the experience
+            profile.education.splice(removeIndex,1);
+
+            profile.save().then(profile=>res.json(profile));
+        })
+
+        .catch(err=>res.status(404).json(err))
+});
+
+//@ROUTES DELETE api/profile
+//@desc  deletes user profile and user account
+//@access Private
+
+
+router.delete('/', passport.authenticate("jwt", {session: false}), (req,res)=>{
+
+    //findOneAndRemove() is a mongoose method
+    Profile.findOneAndRemove({user: req.user.id})
+        .then(()=>{
+            //_id since we are looking for the id IN THE USER MODEL
+            User.findOneAndRemove({_id: req.user.id})
+                .then(()=>res.json({success: true}))
+        })
+});
+
+
 
 module.exports=router;
 
