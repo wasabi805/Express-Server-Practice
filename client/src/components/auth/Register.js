@@ -1,8 +1,10 @@
 import React from 'react';
 import {Component} from 'react';
-
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import classnames from 'classnames';
+import { connect } from 'react-redux';
+import {registerUser} from "../../actions/authActions";
 
 class Register extends Component{
 
@@ -38,18 +40,17 @@ class Register extends Component{
             password2: this.state.password2
         };
 
-        console.log(newUser, '<========');
 
-        //1st param is the route to register in express server (see routes/api/users.js ln 23)
-        axios.post('/api/users/register',newUser)
-            .then(res=> console.log(res.data))
-            .catch(err=> this.setState({
-                errors : err.response.data
-            }))
+        this.props.registerUser(newUser) //<==== pass the form data from newUser into registerUser
 
-        // For reference ==used to be..=> .catch(err=>console.log(err.response.data))
-        // move the errors from error obj{} created in backend to change init state of errors{} from state inside constructor.
-        // if there is an error, the form box will turn red
+
+        // axios.post('/api/users/register',newUser)
+        //     .then(res=> console.log(res.data))
+        //     .catch(err=> this.setState({
+        //         errors : err.response.data
+        //     }))
+        //
+        //
     }
 
     render(){
@@ -58,35 +59,36 @@ class Register extends Component{
         // const errors = this.state.errors ==> think of it as, "you can pull errors out of this.state."
 
         const { errors } = this.state;
-
+        const { user } = this.props.auth; //<== created for logic
 
         return(
             <div className="register">
+
+                {/*the user arg from the const above*/}
+                {user ? user.name : null}  {/*the user can only be from state/setState, or it's null because no entry from form provided */}
+
+
+
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 m-auto">
                             <h1 className="display-4 text-center">Sign Up</h1>
                             <p className="lead text-center">Create your DevConnector account</p>
 
-                            {/*added noValidate as an attr to remove default HTML5 validations*/}
+
                             <form noValidate onSubmit={this.onSubmit}>
 
                                 <div className="form-group">
 
                                     <input type="text"
-                                           // className="form-control form-control-lg" //==> for reference of what className used to be..
                                            className={classnames('form-control form-control-lg',
                                                {'is-invalid': errors.name}
                                                )}
-                                           //Note for ln above: 'is-invalid' will only appear if errors.name exists / if there is is a name, then the name error will not exist.
-                                            // Remember that errors.name originates from validation/register from the backend (ln 22-24 or 28-30) depending on which error
                                            placeholder="Name"
                                            name="name"
                                            value={this.state.name}
                                            onChange={this.onChange}
                                     />
-
-                                    {/*insert the error for the user to view on client side*/}
                                     {errors.name && (<div className="invalid-feedback">{errors.name} </div>)}
 
                                 </div>
@@ -150,4 +152,15 @@ class Register extends Component{
     }
 }
 
-export default Register
+Register.propTypes ={
+    registerUser : PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+};
+
+
+const mapStateToProps = (state)=>({
+   auth : state.auth //<== auth state(the value from the root reducer) goes into a props called auth(the key)
+});
+
+
+export default connect(mapStateToProps, {registerUser})(Register);

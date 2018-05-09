@@ -33,6 +33,16 @@
             <PaintGroupHighlightMap />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/client/src/actions/authActions.js">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/client/src/actions/types.js">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/client/src/components/auth/Login.js">
           <value>
             <PaintGroupHighlightMap />
