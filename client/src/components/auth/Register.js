@@ -1,6 +1,9 @@
 import React from 'react';
 import {Component} from 'react';
 
+import axios from 'axios';
+
+
 class Register extends Component{
 
     constructor(){
@@ -22,6 +25,8 @@ class Register extends Component{
         this.setState({[e.target.name] : e.target.value})
     }
 
+
+    //Expanded onSubmit to make post req to back end route for register and pass in newUser from this file.
     onSubmit(e){
         e.preventDefault(); //used for forms
 
@@ -34,6 +39,13 @@ class Register extends Component{
         };
 
         console.log(newUser, '<========');
+
+        //1st param is the route to register in express server (see routes/api/users.js ln 23)
+        axios.post('/api/users/register',newUser)
+            .then(res=> console.log(res.data))
+            .catch(err=>console.log(
+                err.response.data, 'from catch, Register.js axios,/register '))
+                // err.response.data gives us the error msg's obj that I created earlier from setting up the server
     }
 
     render(){
