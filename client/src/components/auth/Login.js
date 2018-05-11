@@ -1,5 +1,11 @@
 import React from 'react';
 import {Component} from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {loginUser} from "../../actions/authActions";
+import classnames from 'classnames';
+
+
 
 class Login extends Component{
 
@@ -9,11 +15,29 @@ class Login extends Component{
 
             email: '',
             password: '',
+            errors: {},
         };
 
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
+
+    componentWillReceiveProps(nextProps){
+
+        //check if isAuthenticated is true, redirect to the dashboard
+        if(nextProps.auth.isAuthenticated){
+            this.props.history.push('/dashboard') // since we are currently still in the comp, we can use history
+        }
+
+        //if fail auth
+        if(nextProps.errors){
+            this.setState({
+                errors : nextProps.errors
+            })
+        }
+
+    };
+
 
     onChange(e){
         this.setState({
@@ -24,17 +48,24 @@ class Login extends Component{
     onSubmit(e){
         e.preventDefault();
 
-        const user ={
+        const userData ={
             email: this.state.email,
             password: this.state.password,
         };
 
-        console.log(user, '<==== from Login.js, onSubmit()')
+        console.log(userData, '<==== from Login.js, onSubmit()');
+
+        this.props.loginUser(userData); //<== pass in form submit, NOW it will call loginUser() from actions/authActions.js
 
     }
 
 
     render(){
+
+        const {errors} = this.state; // remember that the errors come in as props from the reducer
+                                    //  then, we'll USE COMP willReceiveProps TO MAP IT BACK TO THE STATE
+                                    // in order to render the props we receive (the errors) under the form inputs
+
         return(
             <div className="login">
                 <div className="container">
@@ -46,22 +77,30 @@ class Login extends Component{
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
                                     <input type="email"
-                                           className="form-control form-control-lg"
+                                           className={classnames('form-control form-control-lg',
+                                               {'is-invalid': errors.email}
+                                           )}
                                            placeholder="Email Address"
                                            name="email"
                                            value={this.state.email}
                                            onChange={this.onChange}
                                     />
+                                    {errors.email && (<div className="invalid-feedback">{errors.email} </div>)}
                                 </div>
 
                                 <div className="form-group">
                                     <input type="password"
-                                           className="form-control form-control-lg"
+
+                                           className={classnames('form-control form-control-lg',
+                                               {'is-invalid': errors.password}
+                                           )}
+
                                            placeholder="Password"
                                            name="password"
                                            value={this.state.password}
                                            onChange={this.onChange}
                                     />
+                                    {errors.password && (<div className="invalid-feedback">{errors.password} </div>)}
                                 </div>
 
                                 <input type="submit"
@@ -76,4 +115,16 @@ class Login extends Component{
     }
 }
 
-export default Login
+//REMEMBER THAT ACTIONS ARE ALSO Properties
+Login.propTypes={
+    loginUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors:PropTypes.object.isRequired,
+};
+
+const mapStateToProps=(state)=>({
+    auth: state.auth,
+    errors: state.errors
+});
+
+export default connect(mapStateToProps, {loginUser})(Login);
