@@ -88,6 +88,21 @@
             <PaintGroupHighlightMap />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/client/src/utils/setAuthToken.js">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/client/src/validation/is-empty.js">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/client/src/validation/isEmpty.js">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/config/keys.js">
           <value>
             <PaintGroupHighlightMap />

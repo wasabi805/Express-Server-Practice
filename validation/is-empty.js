@@ -1,6 +1,6 @@
 
 //used to validate strings
-//NOTE: Can use this later on client side validation later
+//NOTE: used for server-side validation
 const isEmpty = (value)=> {
 
     return(
