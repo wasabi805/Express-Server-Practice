@@ -1,7 +1,7 @@
 import React from 'react';
 import {Component} from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import {registerUser} from "../../actions/authActions";
@@ -23,6 +23,19 @@ class Register extends Component{
     };
 
 
+    //LIFECYCLE METHODS
+
+    //this will run when the register comp receives new props
+    //  method takes in param called nextProps
+    componentWillReceiveProps(nextProps){
+        if(nextProps.errors){ //if there are errors
+            this.setState({
+                errors: nextProps.errors
+            })
+        }
+    }
+
+
     onChange(e){
         this.setState({[e.target.name] : e.target.value})
     }
@@ -41,33 +54,19 @@ class Register extends Component{
         };
 
 
-        this.props.registerUser(newUser) //<==== pass the form data from newUser into registerUser
-
-
-        // axios.post('/api/users/register',newUser)
-        //     .then(res=> console.log(res.data))
-        //     .catch(err=> this.setState({
-        //         errors : err.response.data
-        //     }))
-        //
-        //
-    }
-
+        this.props.registerUser(newUser, this.props.history) //<==== pass the form data from newUser into registerUser
+                                                            // ALSO, add 2nd param of this.props.history ==> required to redirect after registration success
+    }                                                           // see: connect at the bottom of this file.
+                                                                // remember, this is all being done so we can make an automatic redirect from an action
     render(){
 
         //the line below is the same thing as :
         // const errors = this.state.errors ==> think of it as, "you can pull errors out of this.state."
 
         const { errors } = this.state;
-        const { user } = this.props.auth; //<== created for logic
 
         return(
             <div className="register">
-
-                {/*the user arg from the const above*/}
-                {user ? user.name : null}  {/*the user can only be from state/setState, or it's null because no entry from form provided */}
-
-
 
                 <div className="container">
                     <div className="row">
@@ -154,13 +153,15 @@ class Register extends Component{
 
 Register.propTypes ={
     registerUser : PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
 };
 
 
 const mapStateToProps = (state)=>({
-   auth : state.auth //<== auth state(the value from the root reducer) goes into a props called auth(the key)
+    auth : state.auth, //<== auth state(the value from the root reducer) goes into a props called auth(the key)
+    errors : state.errors //the errors obj
 });
 
 
-export default connect(mapStateToProps, {registerUser})(Register);
+export default connect(mapStateToProps, {registerUser})(withRouter(Register));
