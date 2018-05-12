@@ -53,6 +53,11 @@
             <PaintGroupHighlightMap />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/client/src/components/common/TextFieldGroup.js">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/client/src/components/layout/Footer.js">
           <value>
             <PaintGroupHighlightMap />

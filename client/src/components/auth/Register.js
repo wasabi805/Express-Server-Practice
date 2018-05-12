@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import {registerUser} from "../../actions/authActions";
+import TextField from "../common/TextFieldGroup"
 
 class Register extends Component{
 
@@ -86,34 +87,42 @@ class Register extends Component{
 
                                 <div className="form-group">
 
-                                    <input type="text"
-                                           className={classnames('form-control form-control-lg',
-                                               {'is-invalid': errors.name}
-                                               )}
-                                           placeholder="Name"
-                                           name="name"
-                                           value={this.state.name}
-                                           onChange={this.onChange}
+                                    <TextField
+                                        placeholder='Name'
+                                        name="name"
+                                        // type="" //don't worry about passing in anything, default for type == text
+                                        value={this.state.name}
+                                        onChange={this.onChange}
+                                        error={errors.name}
                                     />
-                                    {errors.name && (<div className="invalid-feedback">{errors.name} </div>)}
+
+                                    {/*BELOW (for reference)is what I had before importing the TextField comp*/}
+                                    {/*<input type="text"*/}
+                                           {/*className={classnames('form-control form-control-lg',*/}
+                                               {/*{'is-invalid': errors.name}*/}
+                                               {/*)}*/}
+                                           {/*placeholder="Name"*/}
+                                           {/*name="name"*/}
+                                           {/*value={this.state.name}*/}
+                                           {/*onChange={this.onChange}*/}
+                                    {/*/>*/}
+                                    {/*{errors.name && (<div className="invalid-feedback">{errors.name} </div>)}*/}
 
                                 </div>
 
                                 <div className="form-group">
 
-                                    <input type="email"
-                                           className={classnames('form-control form-control-lg',
-                                               {'is-invalid': errors.email}
-                                           )}
-                                           placeholder="Email Address"
-                                           name="email"
-                                           value={this.state.email}
-                                           onChange={this.onChange}
-
+                                    <TextField
+                                        placeholder='Email'
+                                        name="email"
+                                        type="email"
+                                        value={this.state.email}
+                                        onChange={this.onChange}
+                                        error={errors.email}
+                                        info="This site uses Gravatar so if you want a profile image, use a Gravatar account "
                                     />
-                                    {errors.email && (<div className="invalid-feedback">{errors.email} </div>)}
 
-                                    <small className="form-text text-muted">This site uses Gravatar so if you want a profile image, use a Gravatar email</small>
+                                    {/*<small className="form-text text-muted">This site uses Gravatar so if you want a profile image, use a Gravatar account</small>*/}
                                 </div>
 
                                 <div className="form-group">
