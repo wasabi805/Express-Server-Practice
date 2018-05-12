@@ -38,6 +38,11 @@
             <PaintGroupHighlightMap />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/client/src/actions/profileActions.js">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/client/src/actions/types.js">
           <value>
             <PaintGroupHighlightMap />
@@ -54,6 +59,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/client/src/components/common/TextFieldGroup.js">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/client/src/components/dashboard/Dashboard.js">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/client/src/components/dashboard/dashboard.js">
           <value>
             <PaintGroupHighlightMap />
           </value>
@@ -84,6 +99,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/client/src/reducers/index.js">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/client/src/reducers/profileReducer.js">
           <value>
             <PaintGroupHighlightMap />
           </value>
