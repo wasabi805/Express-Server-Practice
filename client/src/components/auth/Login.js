@@ -22,6 +22,15 @@ class Login extends Component{
         this.onSubmit = this.onSubmit.bind(this);
     }
 
+    //Prevent user from seeing login page if they are already logged in
+    componentDidMount(){
+        if(this.props.auth.isAuthenticated){
+            this.props.history.push('/dashboard')
+        }
+    }
+
+
+
     componentWillReceiveProps(nextProps){
 
         //check if isAuthenticated is true, redirect to the dashboard

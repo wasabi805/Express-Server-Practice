@@ -25,6 +25,13 @@ class Register extends Component{
 
     //LIFECYCLE METHODS
 
+    componentDidMount(){
+        if(this.props.auth.isAuthenticated){
+            this.props.history.push('/dashboard')
+        }
+    }
+
+
     //this will run when the register comp receives new props
     //  method takes in param called nextProps
     componentWillReceiveProps(nextProps){

@@ -13,37 +13,39 @@ import Login from "./components/auth/Login";
 
 import setAuthToken from './utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
-import {setCurrentUser} from "./actions/authActions";
+import {logoutUser, setCurrentUser} from "./actions/authActions";
+
+
 
 //Check for token
 if(localStorage.jwtToken){
     //set auth token header auth
     setAuthToken(localStorage.jwtToken); //<==remember that token is stored in localStorage
     //DECODE token, grab user info, and grab token expiration
-    const decoded = jwt_decode(localStorage.jwtToken) //<== pass in token
+    const decoded = jwt_decode(localStorage.jwtToken); //<== pass in token
 
     //SET THE USER AND isAutheticated
     //now, call the setCurrentUser ACTION ==> from client/src/actions/authActions.js
     store.dispatch(setCurrentUser(decoded));
 
+
+    //Check for expired token
+    const currentTime= Date.now() / 1000; //<== 1000 because time is in milliseconds
+
+    if(decoded.exp < currentTime){ //exp because remember in the decoded, we have the exp value...
+        //then logout the user
+        store.dispatch(logoutUser());
+        //  Clear the current profile
+        //redirect to Login
+        window.location.href="/login"
+    }
+
+
 }
 
 
-// ===========  FOR REDUX   ===========
-//wrap EVERYTHING in the provider (ln 33 && 47)
 
-//          Create the store
 
-// To make the store, we need below..
-// const store = createStore(()=> [], {}, applyMiddleware());
-
-//  1st param : the root reducer ==>[]
-//  2nd param : the initial state ==> {}
-//  3rd param : the middleware ===> applyMiddleware());
-//  see Arguments @  https://github.com/reactjs/redux/blob/master/docs/api/createStore.md  for more details
-
-// For configuring store, we don't want it in this file so we'll give it it's own file for breathing room and import it
-//back into App.js
 
 class App extends Component {
   render() {

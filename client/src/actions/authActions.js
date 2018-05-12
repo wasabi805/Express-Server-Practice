@@ -50,3 +50,15 @@ export const setCurrentUser = (decoded)=>{
         payload: decoded, //remember decoded contains all the user data
     }
 };
+
+//Log out user
+export const logoutUser = ()=> dispatch =>{
+    //remove token from local storage
+    localStorage.removeItem('jwtToken');
+    //remove the auth header for future req
+    setAuthToken(false); //<== see utils/setAuthToken.js
+    //set current user to an empty obj which also then sets isAuthenticated to FALSE
+    dispatch(setCurrentUser({})); //<==passed in decoded on success: now instead pass in empty {}
+
+};
+
