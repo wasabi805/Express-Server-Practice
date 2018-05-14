@@ -13,7 +13,7 @@ class CreateProfile extends Component{
     constructor(props){
         super(props);
         this.state={
-            displaySocialInputs: false, // since they will toggle in display, init state= false
+            // displaySocialInputs: false, // moved this down for destructuring:
             handle: '',
             company: '',
             status: '',
@@ -43,8 +43,58 @@ class CreateProfile extends Component{
 
     render(){
 
-        const {errors} = this.state;
+        const {errors, displaySocialInputs} = this.state;
 
+        //Init displaySocialInputs var
+        let socialInputs;
+
+        //check the state to see if we will display the displaySocialInputs when btn is pressed
+        if(displaySocialInputs){
+            socialInputs = (
+                <div>
+
+                    <InputGroup
+                        placeholder='Twitter Profile URL'
+                        name='twitter'
+                        icon="fab fa-twitter"
+                        value={this.state.twitter}
+                        onChange={this.onChange}
+                        error={errors.twitter}
+                    />
+
+                    <InputGroup
+                        placeholder='Linkedin Profile URL'
+                        name='linkedin'
+                        icon="fab fa-linkedin"
+                        value={this.state.linkedin}
+                        onChange={this.onChange}
+                        error={errors.linkedin}
+                    />
+
+                    <InputGroup
+                        placeholder='YouTube Profile URL'
+                        name='youtube'
+                        icon="fab fa-youtube"
+                        value={this.state.youtube}
+                        onChange={this.onChange}
+                        error={errors.youtube}
+                    />
+
+                    <InputGroup
+                        placeholder='Instagram Profile URL'
+                        name='instagram'
+                        icon="fab fa-instagram"
+                        value={this.state.instagram}
+                        onChange={this.onChange}
+                        error={errors.instagram}
+                    />
+
+
+
+                </div>
+            )
+        }
+       
         //Select options for status (default state for options)
         const options = [
             {label: '* Select Professional Status ', value: 0,},
@@ -78,7 +128,7 @@ class CreateProfile extends Component{
                                     value={this.state.handle}
                                     onChange={this.onChange}
                                     error={errors.handle}
-                                    info="A unique handle for your profileURL : Your fullname, company name, nickname."
+                                    info="A unique handle for your profileURL : Your full name, company name, nickname."
                                 />
 
                                <SelectListGroup
@@ -91,7 +141,86 @@ class CreateProfile extends Component{
                                    info="Give us an idea of where you are at in your career."
                                />
 
+                               <TextFieldGroup
+                                   placeholder="Company"
+                                   name="company"
+                                   value={this.state.company}
+                                   onChange={this.onChange}
+                                   error={errors.company}
+                                   info="Could be your own company or one that you work for."
+                               />
 
+                               <TextFieldGroup
+                                   placeholder="Website"
+                                   name="website"
+                                   value={this.state.website}
+                                   onChange={this.onChange}
+                                   error={errors.website}
+                                   info="Could be your own website or a company one."
+                               />
+
+                               <TextFieldGroup
+                                   placeholder="Location"
+                                   name="location"
+                                   value={this.state.location}
+                                   onChange={this.onChange}
+                                   error={errors.location}
+                                   info="City or city & state suggested(eg. San Jose, CA)."
+                               />
+
+                               <TextFieldGroup
+                                   placeholder="Skills"
+                                   name="skills"
+                                   value={this.state.skills}
+                                   onChange={this.onChange}
+                                   error={errors.skills}
+                                   info="Please use comma separated values (eg. HTML,CSS, JavaScript, PHP)."
+                               />
+
+                               <TextFieldGroup
+                                   placeholder="Github handle"
+                                   name="githubusername"
+                                   value={this.state.githubusername}
+                                   onChange={this.onChange}
+                                   error={errors.githubusername}
+                                   info="If you want your latest repos and Github link, include your username."
+                               />
+
+                               <TextAreaFieldGroup
+                                    placeholder='Short Bio'
+                                    name='bio'
+                                    value={this.state.bio}
+                                    onChange={this.onChange}
+                                    error={errors.bio}
+                                    info="Tell us a little something about yourself."
+                               />
+
+                                {/*Social Media stuff*/}
+
+                                {/*Note: this.setState toggles the display of the social stuff ==> fb, twitter, linkedin etc..*/}
+                                <div className="mb-3">
+                                    <button
+                                        className='btn btn-light'
+
+                                        onClick={()=>{
+                                            this.setState(prevState => ({
+                                                displaySocialInputs: !prevState.displaySocialInputs
+                                            }))
+                                        }}
+                                    >
+                                        Add Social Network Links
+                                    </button>
+
+                                    <span className='text-muted'>Optional</span>
+                                </div>
+
+                               {/*Display Social Inputs*/}
+                               {socialInputs}
+                               <input
+                                    type='submit'
+                                    value='submit'
+                                    className='btn btn-info btn-block mt-4'
+                               />
 
                            </form>
 
