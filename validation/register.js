@@ -30,7 +30,7 @@ module.exports= function validateRegisterInput(data) {
     }
 
     if(!Validator.isEmail(data.email)){                             //<=== .isEmail() = email format
-        errors.email= 'Email field can not be blank.'
+        errors.email= 'This is not a valid email format.'
     }
 
     if(Validator.isEmpty(data.password)){
