@@ -26,7 +26,6 @@ class Dashboard extends Component{
         }
         else{
             //Check to see if the logged in user has profile data
-
             //is the obj empty?
             if(Object.keys(profile).length > 0){
                 dashboardContent = <h4> TODO : DISPLAY A PROFILE </h4>
