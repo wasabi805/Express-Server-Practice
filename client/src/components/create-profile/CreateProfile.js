@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import InputGroup from '../common/InputGroup';
-import SelectListGroup from '../common/InputGroup';
+import SelectListGroup from '../common/SelectListGroup';
 
 
 class CreateProfile extends Component{
@@ -26,11 +26,37 @@ class CreateProfile extends Component{
             youtube: '',
             instagram: '',
             errors:{}
-        }
+        };
+
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
+
+    onSubmit(e){
+        e.preventDefault();
+        console.log("submit")
+    }
+
+    onChange(e){
+        this.setState({[e.target.name] : e.target.value})
+    }
+
     render(){
-        /*.m-auto places the column in the middle*/
-        /*display as block, padding == 3 */
+
+        const {errors} = this.state;
+
+        //Select options for status (default state for options)
+        const options = [
+            {label: '* Select Professional Status ', value: 0,},
+            {label: 'Junior Developer', value: 'Junior Developer'},
+            {label: 'Senior Developer', value: 'Senior Developer'},
+            {label: 'Manager', value: 'Manager'},
+            {label: 'Student or Learning', value: 'Student or Learning'},
+            {label: 'Instructor or Teacher', value: 'Instructor or Teacher'},
+            {label: 'Intern', value: 'Intern'},
+            {label: 'Other', value: 'Other'},
+        ];
+
         return(
             <div className='create-profile'>
                <div className='container'>
@@ -43,6 +69,32 @@ class CreateProfile extends Component{
                             <small className='d-block pb-3'>
                                 * = required fields
                             </small>
+
+                           <form onSubmit={this.onSubmit}>
+
+                                <TextFieldGroup
+                                    placeholder="* Profile Handle"
+                                    name="handle"
+                                    value={this.state.handle}
+                                    onChange={this.onChange}
+                                    error={errors.handle}
+                                    info="A unique handle for your profileURL : Your fullname, company name, nickname."
+                                />
+
+                               <SelectListGroup
+                                   placeholder="Status"
+                                   name="status"
+                                   value={this.state.status}
+                                   options={options}
+                                   onChange={this.onChange}
+                                   error={errors.status}
+                                   info="Give us an idea of where you are at in your career."
+                               />
+
+
+
+                           </form>
+
                        </div>
                    </div>
                </div>
