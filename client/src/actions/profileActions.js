@@ -17,7 +17,7 @@ export const getCurrentProfile=()=>dispatch =>{
         .catch(err=>dispatch({
             type: GET_PROFILE,
             payload: {} //if no profile, return an empty {}so it can fail validation and redirect us to create a new profile
-        }))
+        }));
 };
 
 //Create User Profile
