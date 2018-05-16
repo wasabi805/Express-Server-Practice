@@ -40,6 +40,19 @@ export const addExperience = (expData, history)=> dispatch =>{
         }))
 };
 
+//Add experience
+
+export const addEducation = (eduData, history)=> dispatch =>{
+    axios
+        .post('/api/profile/education', eduData)
+        .then(res=>history.push('/dashboard'))
+        .catch(err=> dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        }))
+};
+
+
 //Profile Loading
 export const setProfileLoading = () =>{
   return{
