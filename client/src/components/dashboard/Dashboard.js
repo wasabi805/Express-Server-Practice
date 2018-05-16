@@ -6,6 +6,7 @@ import {getCurrentProfile, deleteAccount} from "../../actions/profileActions";
 import Spinner from '../common/Spinner';
 import {Link} from 'react-router-dom';
 import ProfileActions from './ProfileActions';
+import Experience from './Experience';
 
 
 class Dashboard extends Component{
@@ -41,6 +42,9 @@ class Dashboard extends Component{
 
                         <ProfileActions/>
                         {/*TODO:  exp and edu */}
+                        <Experience
+                            experience={profile.experience} // profile.experience is an ARRAY
+                        />
 
                         <div style={{marginBottom: '60px'}}>
                             <button onClick={this.onDeleteClick.bind(this)} className='btn btn-danger'>Delete My Account</button>
@@ -69,9 +73,9 @@ class Dashboard extends Component{
               <div className='container'>
                   <div className='row'>
                       <div className='col-md-12'>
-                          <h1 className='display-4'>
+                          <div className='display-4'>
                              <h1> Dashboard</h1>
-                          </h1>
+                          </div>
 
                           {dashboardContent}
 

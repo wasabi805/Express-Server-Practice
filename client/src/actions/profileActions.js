@@ -40,7 +40,7 @@ export const addExperience = (expData, history)=> dispatch =>{
         }))
 };
 
-//Add experience
+//Add education
 
 export const addEducation = (eduData, history)=> dispatch =>{
     axios
@@ -52,6 +52,23 @@ export const addEducation = (eduData, history)=> dispatch =>{
         }))
 };
 
+//Delete Experience
+
+export const deleteExperience = (id)=> dispatch =>{
+    axios
+        .delete(`/api/profile/experience/${id}`)
+        .then(res=>
+            dispatch({
+                type: GET_PROFILE,
+                payload: res.data //payload is res.data so we can bring back the profile now minus the deleted profile
+            })
+
+        )
+        .catch(err=> dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        }))
+};
 
 //Profile Loading
 export const setProfileLoading = () =>{
