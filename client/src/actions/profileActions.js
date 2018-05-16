@@ -28,28 +28,17 @@ export const createProfile = (profileData, history)=> dispatch=> {
     }));
 };
 
-//Delete User Account && Profile
+//Add experience
 
-export const deleteAccount =()=> dispatch =>{
-
-    if(window.confirm('Are you sure? This cannot be undone.')){
-        axios.delete('/api/profile').then(res=>dispatch({
-
-            type: SET_CURRENT_USER,
-            payload: {}
-        })
-
-        ).catch(err=> dispatch({
-
+export const addExperience = (expData, history)=> dispatch =>{
+    axios
+        .post('/api/profile/experience', expData)
+        .then(res=>history.push('/dashboard'))
+        .catch(err=> dispatch({
             type: GET_ERRORS,
             payload: err.response.data
-            })
-        )
-    }
-}
-
-;
-
+        }))
+};
 
 //Profile Loading
 export const setProfileLoading = () =>{
@@ -62,5 +51,25 @@ export const setProfileLoading = () =>{
 export const clearCurrentProfile = () =>{
     return{
         type: CLEAR_CURRENT_PROFILE
+    }
+};
+
+//Delete User Account && Profile
+
+export const deleteAccount =()=> dispatch =>{
+
+    if(window.confirm('Are you sure? This cannot be undone.')){
+        axios.delete('/api/profile').then(res=>dispatch({
+
+                type: SET_CURRENT_USER,
+                payload: {}
+            })
+
+        ).catch(err=> dispatch({
+
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        )
     }
 };
