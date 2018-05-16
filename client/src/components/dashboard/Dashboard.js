@@ -7,7 +7,7 @@ import Spinner from '../common/Spinner';
 import {Link} from 'react-router-dom';
 import ProfileActions from './ProfileActions';
 import Experience from './Experience';
-
+import Education from './Education';
 
 class Dashboard extends Component{
 
@@ -44,6 +44,10 @@ class Dashboard extends Component{
                         {/*TODO:  exp and edu */}
                         <Experience
                             experience={profile.experience} // profile.experience is an ARRAY
+                        />
+
+                        <Education
+                            education={profile.education}
                         />
 
                         <div style={{marginBottom: '60px'}}>
