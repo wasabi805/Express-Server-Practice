@@ -40,7 +40,6 @@ router.get('/', passport.authenticate('jwt', {session: false}),
             Profile.findOne({user: req.user.id})
                 .populate('user',['name','avatar']) // populates the profile from user key inside the Profile.js Schema.
                 .then(profile =>{
-                console.log("from the response '/' profile.js,", profile);
 
                 if(!profile){
                     errors.noprofile ="There is no profile for this user";

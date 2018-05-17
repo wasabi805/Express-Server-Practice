@@ -15,7 +15,6 @@ module.exports= function validateProfileInput(data) {
 
     if(!Validator.isLength(data.handle,{min: 2, max: 40})) {
 
-        console.log(typeof data.handle, 'this is data***************');
         errors.handle = 'Handle needs to be between 2 and 4 characters.';
     }
 
@@ -33,7 +32,7 @@ module.exports= function validateProfileInput(data) {
 
     //Check to see if its not empty
     //this can be empty since it's optional BUT, if there is a site, it should be in URL format.
-    console.log(isEmpty(data.website));
+
     if(!isEmpty(data.website)){
         if(!Validator.isURL(data.website)){
             errors.website= "Not a valid URL"
