@@ -72,8 +72,6 @@ class ProfileHeader extends Component{
                                     </a>
                                 )}
 
-
-
                             </p>
                         </div>
                     </div>
@@ -82,10 +80,6 @@ class ProfileHeader extends Component{
         )
     }
 }
-
-const mapStateToProps =(state)=>({
-
-});
 
 ProfileHeader.propTypes={
     profile: PropTypes.object.isRequired
