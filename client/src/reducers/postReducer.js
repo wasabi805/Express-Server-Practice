@@ -1,4 +1,4 @@
-import {ADD_POST} from "../actions/types";
+import {ADD_POST, GET_POSTS, POST_LOADING} from "../actions/types";
 
 
 const initialState={
@@ -10,6 +10,22 @@ const initialState={
 export default function (state=initialState, action) {
 
     switch(action.type){
+
+        //for the spinner
+        case POST_LOADING:
+            return{
+                ...state,
+                loading : true,
+            };
+
+        //once we get the posts....
+        case GET_POSTS:
+            return{
+                ...state,
+                posts: action.payload,
+                loading: false
+            };
+
         // This will automatically add the new post to []
         case ADD_POST:
             return{
