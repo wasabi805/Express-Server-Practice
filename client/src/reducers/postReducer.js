@@ -1,4 +1,4 @@
-import {ADD_POST, GET_POSTS, POST_LOADING} from "../actions/types";
+import {ADD_POST, GET_POSTS, POST_LOADING, DELETE_POST} from "../actions/types";
 
 
 const initialState={
@@ -31,6 +31,14 @@ export default function (state=initialState, action) {
             return{
                 ...state,
                 posts:[action.payload, ...state.posts]
+            };
+
+        //remember that post id is coming in through the payload ==> we want to remove the post from [] via the post id
+        case DELETE_POST:
+            return{
+                ...state,
+                posts: state.posts.filter(post=> post._id !== action.payload)
+                //deletion occurs LOCALLY , within the UI
             };
 
 
