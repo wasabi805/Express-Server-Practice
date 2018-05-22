@@ -37,8 +37,10 @@ router.get('/', passport.authenticate('jwt', {session: false}),
             // console.log("REQ.user - ", req.user);
             // res.json({status: "success"});
 
+            // populates the profile from user key inside the Profile.js Schema.
             Profile.findOne({user: req.user.id})
-                .populate('user',['name','avatar']) // populates the profile from user key inside the Profile.js Schema.
+                // .populate('user',['name','avatar'])
+                .populate('user', ['name','avatar'])
                 .then(profile =>{
 
                 if(!profile){
@@ -49,6 +51,28 @@ router.get('/', passport.authenticate('jwt', {session: false}),
             }).catch(err=> res.status(404).json(err))
         }
 );
+
+//@ROUTES GET api/profile/all
+//@desc  Get ALL user profiles
+//@access Public
+
+router.get('/all', (req, res)=>{
+
+    const errors = {};
+
+    Profile.find()
+        .populate('user', ['name', 'avatar'])
+        .then(profiles=>{
+            if(!profiles){
+                errors.noprofile = 'There are no profile for this user.';
+                return res.status(404).json(errors);
+            }
+            res.json(profiles);
+        })
+        .catch(
+            err=> res.status(400).json({profile: "There are no profile for this user. (From Catch)"}));
+});
+
 
 
 //@ROUTES GET api/profile/handle/:handle
@@ -62,6 +86,7 @@ router.get('/handle/:handle', (req,res)=>{
 
     Profile.findOne({handle: req.params.handle})
         .populate('user',['name', 'avatar'])
+
         .then(profile=>{
             if(!profile){
                 errors.noprofile='There is no profile for this user.';
@@ -95,31 +120,6 @@ router.get('/user/:user_id', (req,res)=>{
         }).catch(err=>res.status(404).json({profile: "There is no profile for this user.(From Catch)"}))
 });
 
-
-//@ROUTES GET api/profile/all
-//@desc  Get ALL user profiles
-//@access Public
-
-router.get('/all', (req, res)=>{
-
-    const errors = {};
-
-    Profile.find()
-        .populate('user', ['names', 'avatar'])
-        .then(profiles=>{
-            if(!profiles){
-                errors.noprofile = 'There are no profile for this user.';
-                return res.status(404).json(errors);
-            }
-            res.json(profiles);
-        })
-        .catch(
-            err=> res.status(400).json({profile: "There are no profile for this user. (From Catch)"}));
-});
-
-
-
-
 //@ROUTES POST api/profile
 //@desc  CREATE or EDIT user profile
 //@access Private
@@ -139,12 +139,12 @@ router.post('/', passport.authenticate('jwt', {session: false}),
 
         //GET FIELDS - NOTE: The fields we'll post are in req.body
         const profileFields={};
+        console.log('frm models/Profile.js ln 148');
 
         profileFields.user = req.user.id;
-        if(req.body.handle){
-            profileFields.handle = req.body.handle //check to see if the handle was sent in from the form : if so set it to req.body.handle
-        }
 
+        //check to see if the handle was sent in from the form : if so set it to req.body.handle
+        if(req.body.handle) profileFields.handle = req.body.handle;
         if(req.body.company) profileFields.company = req.body.company;
         if(req.body.website) profileFields.website = req.body.website;
         if(req.body.location) profileFields.location = req.body.location;
