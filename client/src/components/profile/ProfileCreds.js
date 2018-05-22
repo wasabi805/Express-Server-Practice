@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 
 class ProfileCreds extends Component{
@@ -91,7 +91,7 @@ class ProfileCreds extends Component{
 
 
 ProfileCreds.propTypes={
-    profile: PropTypes.object.isRequired
+    // profile: PropTypes.object.isRequired
 };
 
 export default ProfileCreds

@@ -41,8 +41,6 @@ class CreateProfile extends Component{
 
     componentWillReceiveProps(nextProps){
 
-        console.log(nextProps, '<--<EditProfile/>nextProps');
-
         // if there are errors, add them to the errors{} (ln 55 of this file)
         if(nextProps.errors){
             this.setState({
@@ -116,6 +114,8 @@ class CreateProfile extends Component{
             instagram: this.state.instagram,
 
         };
+
+
 
         this.props.createProfile(profileData, this.props.history) //pass in history so redirect can occur
 

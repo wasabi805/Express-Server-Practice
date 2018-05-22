@@ -16,7 +16,7 @@ class ProfileItem extends Component{
                 <div className='row'>
                     {/*NOTE: remember on the back end, we used populate: allows us to extract user name for avatar from 'user'*/}
                     <div className='col-2'>
-                        <img src={profile.user.avatar} className='rounded-circle'/>
+                        <img src={profile.user.avatar} alt='#' className='rounded-circle'/>
                     </div>
 
                     <div className='col-lg-6 col-md-4 col-8'>
