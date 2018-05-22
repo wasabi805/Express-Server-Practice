@@ -29,6 +29,12 @@ class Navbar extends Component{
                     <Link className="nav-link" to="/dashboard">Dashboard</Link>
                 </li>
 
+                {/*Link back to posts*/}
+                <li className="nav-item">
+                    <Link className="nav-link" to="/feed">Post Feed</Link>
+                </li>
+
+
                 {/*Link to logout*/}
                 <li className="nav-item">
                     <a href=""
