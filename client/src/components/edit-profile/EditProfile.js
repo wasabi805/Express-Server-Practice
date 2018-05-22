@@ -41,6 +41,8 @@ class CreateProfile extends Component{
 
     componentWillReceiveProps(nextProps){
 
+        console.log(nextProps, '<--<EditProfile/>nextProps');
+
         // if there are errors, add them to the errors{} (ln 55 of this file)
         if(nextProps.errors){
             this.setState({
