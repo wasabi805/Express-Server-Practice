@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser=require('body-parser'); //see './models/User.js' line 30
 const passport = require('passport');
+const path = require('path');
 
 const users=require('./routes/api/users');
 const profile=require('./routes/api/profile');
@@ -37,6 +38,25 @@ require('./config/passport')(passport);
 app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/posts', posts);
+
+
+//Server static assets IF IN PRODUCTION
+
+//run test to see if we are in production
+
+if(process.env.NODE_ENV === 'production'){
+    //if true, SET static folder
+    app.use(express.static('client/build'))
+
+    app.get('*', (req,res)=>{
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+
+}
+
+
+
+
 
 
 const port = process.env.port || 5000;
