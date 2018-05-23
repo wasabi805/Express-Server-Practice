@@ -27,7 +27,7 @@ class Dashboard extends Component{
         let dashboardContent; //init this var for checking if profile == null
 
         //renders Loading....
-        if(profile == null || loading){
+        if(profile === null || loading){
             dashboardContent = <Spinner/>
         }
         else{
@@ -41,7 +41,7 @@ class Dashboard extends Component{
                         </p>
 
                         <ProfileActions/>
-                        {/*TODO:  exp and edu */}
+
                         <Experience
                             experience={profile.experience} // profile.experience is an ARRAY
                         />

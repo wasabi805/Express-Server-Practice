@@ -17,14 +17,22 @@ class Profile extends Component{
 
     componentDidMount(){
 
-        console.log(this.props.profile + "****************");
-
-        let matchProfHandle = this.props.match.params.handle;
-
-        console.log(matchProfHandle,'<---------');
+        // let matchProfHandle = this.props.match.params.handle;
 
         if(this.props.match.params.handle){
             this.props.getProfileByHandle(this.props.match.params.handle)
+        }
+    };
+
+    componentWillReceiveProps(nextProps){
+
+        console.log(this.props.profile.loading, 'loading')
+        console.log(this.props.profile.loading, 'loading')
+
+        //check if nextProps == null
+        if(nextProps.profile.profile === null && this.props.profile.loading){
+            //then redirect
+            this.props.history.push('/not-found')
         }
     };
 
@@ -61,7 +69,9 @@ class Profile extends Component{
                         education={profile.education}
                         experience={profile.experience}
                     />
-                    <ProfileGitHub/>
+
+                    {profile.githubusername ? ( <ProfileGitHub username={profile.githubusername}/>) : null }
+
                 </div>
             );
         }

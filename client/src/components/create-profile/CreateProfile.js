@@ -63,6 +63,8 @@ class CreateProfile extends Component{
 
         };
 
+        console.log(profileData, '<----CreateProfile.js ln 66');
+
         this.props.createProfile(profileData, this.props.history) //pass in history so redirect can occur
 
     }

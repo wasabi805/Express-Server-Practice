@@ -166,7 +166,7 @@ router.post('/', passport.authenticate('jwt', {session: false}),
         if(req.body.twitter) profileFields.social.twitter = req.body.twitter;
         if(req.body.facebook) profileFields.social.facebook = req.body.facebook;
         if(req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
-        if(req.body.instagram) profileFields.instagram = req.body.instagram;
+        if(req.body.instagram) profileFields.social.instagram = req.body.instagram;
 
         //FIND THE USER
         console.log('looking for user', req.user.id);
