@@ -6,9 +6,6 @@ import {addComment} from "../../actions/postActions";
 
 import Spinner from '../common/Spinner';
 
-
-
-
 class CommentForm extends Component{
 
     constructor(props){
@@ -75,7 +72,6 @@ class CommentForm extends Component{
                         <form
                             onSubmit={this.onSubmit}
                         >
-
 
                             <div className="form-group">
 
