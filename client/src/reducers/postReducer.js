@@ -1,4 +1,4 @@
-import {ADD_POST, GET_POSTS, POST_LOADING, DELETE_POST} from "../actions/types";
+import {GET_POST, ADD_POST, GET_POSTS, POST_LOADING, DELETE_POST} from "../actions/types";
 
 
 const initialState={
@@ -32,6 +32,16 @@ export default function (state=initialState, action) {
                 ...state,
                 posts:[action.payload, ...state.posts]
             };
+
+
+         // This retrieves a single user post
+        case GET_POST:
+            return{
+                ...state,
+                post: action.payload,
+                loading: false
+            };
+
 
         //remember that post id is coming in through the payload ==> we want to remove the post from [] via the post id
         case DELETE_POST:

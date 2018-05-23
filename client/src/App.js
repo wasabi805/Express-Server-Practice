@@ -18,6 +18,7 @@ import AddEducation from './components/add-credentials/AddEducation';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
 import Posts from './components/posts/Posts';
+import Post from './components/post/Post';
 import NotFound from './components/not-found/NotFound';
 
 import setAuthToken from './utils/setAuthToken';
@@ -93,6 +94,10 @@ class App extends Component {
 
                       <Switch>
                           <PrivateRoute exact path='/feed' component={ Posts }/>
+                      </Switch>
+
+                      <Switch>
+                          <PrivateRoute exact path='/post/:id' component={ Post }/>
                       </Switch>
 
                       <Route exact path='/not-found' component={ NotFound }/>

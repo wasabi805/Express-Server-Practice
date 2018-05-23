@@ -35,7 +35,7 @@ class PostItem extends Component{
 
     render(){
 
-        const {post, auth} = this.props;
+        const {post, auth, showActions} = this.props;
 
         return(
             <div className="card card-body mb-3">
@@ -61,11 +61,12 @@ class PostItem extends Component{
                             {post.text}
                            </p>
 
-                        {/* ADD Like Btn*/}
-                        <button type="button" onClick={this.onLikeClick.bind(this, post._id)} className="btn btn-light mr-1">
+                        {showActions ? (<span>
+                            {/* ADD Like Btn*/}
+                            <button type="button" onClick={this.onLikeClick.bind(this, post._id)} className="btn btn-light mr-1">
 
                             {/*used classnames to turn fa icon green when liked*/}
-                            <i className={classnames('fas fa-thumbs-up',{'text-info': this.findUserLike(post.likes)} )}/>
+                                <i className={classnames('fas fa-thumbs-up',{'text-info': this.findUserLike(post.likes)} )}/>
 
                             <span className="badge badge-light">
                                 {/*LIKE COUNT*/}
@@ -73,27 +74,30 @@ class PostItem extends Component{
                                 </span>
                         </button>
 
-                        {/* REMOVE Like Btn*/}
-                        <button type="button" onClick={this.onUnlikeClick.bind(this, post._id)} className="btn btn-light mr-1">
+                            {/* REMOVE Like Btn*/}
+                            <button type="button" onClick={this.onUnlikeClick.bind(this, post._id)} className="btn btn-light mr-1">
                             <i className="text-secondary fas fa-thumbs-down"></i>
                         </button>
 
-                        {/*COMMENTS : finds by the post._id*/}
-                        {/*TODO create the route later*/}
+                            {/*COMMENTS : finds by the post._id*/}
+                            {/*TODO create the route later*/}
 
-                        <Link to={`/post/${post._id}`} className="btn btn-info mr-1">
+                            <Link to={`/post/${post._id}`} className="btn btn-info mr-1">
                             Comments
                         </Link>
 
-                        {post.user === auth.user.id ? (
-                            <button
-                                type="button"
-                                className='btn btn-danger mr-1'
-                                onClick={this.onDeleteClick.bind(this, post._id)}
-                            >
-                                <i className='fas fa-times'></i>
+                            {post.user === auth.user.id ? (
+                                <button
+                                    type="button"
+                                    className='btn btn-danger mr-1'
+                                    onClick={this.onDeleteClick.bind(this, post._id)}
+                                >
+                                    <i className='fas fa-times'></i>
 
-                            </button>) : null}
+                                </button>) : null}
+
+
+                        </span>): null}
 
 
                     </div>
@@ -108,6 +112,11 @@ const mapStateToProps =(state)=>({
     auth: state.auth,
 
 });
+
+
+PostItem.defaultProps={
+  showActions : true
+};
 
 
 PostItem.propTypes={
