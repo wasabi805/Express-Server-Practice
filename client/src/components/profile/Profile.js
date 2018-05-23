@@ -24,10 +24,8 @@ class Profile extends Component{
         }
     };
 
+    //HANDLES PROFILE NOT FOUND
     componentWillReceiveProps(nextProps){
-
-        console.log(this.props.profile.loading, 'loading')
-        console.log(this.props.profile.loading, 'loading')
 
         //check if nextProps == null
         if(nextProps.profile.profile === null && this.props.profile.loading){
