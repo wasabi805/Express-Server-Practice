@@ -1,6 +1,6 @@
 
 //used to validate strings
-//NOTE: Can use this later on client side validation later
+//NOTE: used for server-side validation
 const isEmpty = (value)=> {
 
     return(
@@ -16,6 +16,6 @@ const isEmpty = (value)=> {
 
 //export so we can use in other files (see ln 5 inside validation/register.js)
 
-console.log(isEmpty(''));
+// console.log(isEmpty(''));
 module.exports= isEmpty;
 

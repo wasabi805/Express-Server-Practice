@@ -41,7 +41,7 @@ const ProfileSchema = new Schema({
         type: String,
     },
 
-    github:{
+    githubusername:{
         type: String,
     },
 
@@ -66,7 +66,6 @@ const ProfileSchema = new Schema({
             from:{
                 type: Date,
                 required: true,
-
             },
 
             to: {
@@ -99,7 +98,7 @@ const ProfileSchema = new Schema({
                 required: true,
             },
 
-            fieldofstufy:{
+            fieldofstudy:{
                 type: String,
                 required: true,
             },

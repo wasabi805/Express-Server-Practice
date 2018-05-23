@@ -1,2 +1,8 @@
 node_modules/
-.idea/
+
+.idea/*
+.idea/workspace.xml
+
+/config/keys_dev.js
+
+.idea
