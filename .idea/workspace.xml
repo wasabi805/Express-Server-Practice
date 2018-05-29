@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4f8c159-cc11-4925-8733-f704aada5c18" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/StickySelectionHighlights.xml" afterPath="$PROJECT_DIR$/.idea/StickySelectionHighlights.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/client/src/components/add-credentials/AddEducation.js" afterPath="$PROJECT_DIR$/client/src/components/add-credentials/AddEducation.js" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/add-credentials/AddExperience.js" afterPath="$PROJECT_DIR$/client/src/components/add-credentials/AddExperience.js" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/common/TextFieldGroup.js" afterPath="$PROJECT_DIR$/client/src/components/common/TextFieldGroup.js" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/dashboard/Education.js" afterPath="$PROJECT_DIR$/client/src/components/dashboard/Education.js" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/dashboard/Experience.js" afterPath="$PROJECT_DIR$/client/src/components/dashboard/Experience.js" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/edit-profile/EditProfile.js" afterPath="$PROJECT_DIR$/client/src/components/edit-profile/EditProfile.js" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/post/CommentForm.js" afterPath="$PROJECT_DIR$/client/src/components/post/CommentForm.js" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/posts/PostForm.js" afterPath="$PROJECT_DIR$/client/src/components/posts/PostForm.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -134,8 +125,8 @@
       <file leaf-file-name="AddEducation.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/src/components/add-credentials/AddEducation.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="118" column="34" lean-forward="true" selection-start-line="118" selection-start-column="34" selection-end-line="118" selection-end-column="34" />
+            <state relative-caret-position="522">
+              <caret line="205" column="0" lean-forward="true" selection-start-line="205" selection-start-column="0" selection-end-line="205" selection-end-column="0" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -336,12 +327,12 @@
       <workItem from="1525125818405" duration="47867000" />
       <workItem from="1525476516971" duration="7000" />
       <workItem from="1525477974328" duration="6350000" />
-      <workItem from="1527620219674" duration="13286000" />
+      <workItem from="1527620219674" duration="13361000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86980000" />
+    <option name="totallyTimeSpent" value="87055000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1326" y="-1080" width="1920" height="1080" extended-state="0" />
@@ -794,8 +785,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/add-credentials/AddEducation.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="118" column="34" lean-forward="true" selection-start-line="118" selection-start-column="34" selection-end-line="118" selection-end-column="34" />
+        <state relative-caret-position="522">
+          <caret line="205" column="0" lean-forward="true" selection-start-line="205" selection-start-column="0" selection-end-line="205" selection-end-column="0" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>

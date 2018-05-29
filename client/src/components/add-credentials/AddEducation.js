@@ -203,6 +203,7 @@ AddEducation.propTypes ={
 };
 
 
+
 const mapStateToProps = (state)=>({
     profile: state.profile,
     errors: state.errors
