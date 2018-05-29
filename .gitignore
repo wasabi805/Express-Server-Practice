@@ -1,8 +1,5 @@
 node_modules/
-
-.idea/*
-.idea/workspace.xml
+package-lock.json
 
 /config/keys_dev.js
 
-.idea
