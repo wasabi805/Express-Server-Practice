@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import {addComment} from "../../actions/postActions";
 
-import Spinner from '../common/Spinner';
-
 class CommentForm extends Component{
 
     constructor(props){

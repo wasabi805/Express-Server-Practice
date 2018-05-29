@@ -15,11 +15,9 @@ class Education extends Component{
 
         const education = this.props.education.map(edu=> (
 
-            <tr tr key={edu._id}>
+            <tr key={edu._id}>
                 <td>{edu.school}</td>
                 <td>{edu.degree}</td>
-                {/*<td>{exp.from} - {exp.to}</td>*/} {/* wiped out this line : using moment to format date*/}
-
                 <td>
                     <Moment format ="MM/DD/YYYY">
                         {edu.from}
@@ -41,19 +39,18 @@ class Education extends Component{
 
         return(
             <div>
-                <h6 className='mb-4'>
-                    Education Credentials
-                    <table className='table'>
-                        <thread>
-                            <tr>
-                                <th>School</th>
-                                <th>Degree</th>
-                                <th>Years</th>
-                            </tr>
-                            {education}
-                        </thread>
-                    </table>
-                </h6>
+                <h4 className="mb-4">Education Credentials</h4>
+                <table className="table">
+                    <thead>
+                    <tr>
+                        <th>School</th>
+                        <th>Degree</th>
+                        <th>Years</th>
+                        <th />
+                    </tr>
+                    {education}
+                    </thead>
+                </table>
             </div>
         )
     }

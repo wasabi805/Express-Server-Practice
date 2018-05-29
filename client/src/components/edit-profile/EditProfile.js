@@ -16,9 +16,11 @@ class CreateProfile extends Component{
     constructor(props){
         super(props);
         this.state={
-            // displaySocialInputs: false, // moved this down for destructuring:
+            displaySocialInputs: false, // moved this down for destructuring:
             handle: '',
             company: '',
+            website: '',
+            location: '',
             status: '',
             skills: '',
             githubusername: '',

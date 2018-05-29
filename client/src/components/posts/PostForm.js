@@ -4,10 +4,6 @@ import PropTypes from 'prop-types';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import {addPost} from "../../actions/postActions";
 
-import Spinner from '../common/Spinner';
-
-
-
 
 class PostForm extends Component{
 
