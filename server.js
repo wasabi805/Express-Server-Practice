@@ -55,6 +55,10 @@ if(process.env.NODE_ENV === 'production'){
 }
 
 
+let test = path.resolve(__dirname, 'client', 'build', 'index.html');
+console.log('TEST: ' , test);
+
+
 const port = process.env.PORT || 5000;
 
 
