@@ -32,7 +32,7 @@ class PostItem extends Component{
             return false
         }
     }
-
+    //
     render(){
 
         const {post, auth, showActions} = this.props;
