@@ -43,7 +43,7 @@ class PostItem extends Component{
                     <div className="col-md-2">
                         <a href={`profile/${post.name}`}>
 
-                            {/*THE USER AVATAR*/}
+                            {/*THE USER_ AVATAR*/}
                             <img className="rounded-circle d-none d-md-block"
                                  src={post.avatar}
                                  alt="" />
