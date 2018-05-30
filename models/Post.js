@@ -14,6 +14,11 @@ const PostSchema = new Schema({
         required: true
     },
 
+    // profile:{
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'profile'
+    // },
+
     //NOTE: One approach to creating a Post Schema
     //although I can grab and populate the following from the User model, I'll give the Post model it's own
     //user data such as handle and name so that if a user does delete themselves from the site, they're posts and
