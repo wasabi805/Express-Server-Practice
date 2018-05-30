@@ -20,8 +20,8 @@ module.exports= function validatePostInput(data) {
     console.log(data, '<=======================');
 
     return  {
-        errors: errors, // error obj
-        isValid: isEmpty(errors) // check to see if errors obj is empty
+        errors: errors,
+        isValid: isEmpty(errors)
     }
 
 };
