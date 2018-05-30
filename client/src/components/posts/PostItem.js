@@ -20,7 +20,7 @@ class PostItem extends Component{
         this.props.removeLike(id);
     }
 
-    //verification if like already made
+    //verification if like already made/
     findUserLike(likes){
 
         const {auth} = this.props;
