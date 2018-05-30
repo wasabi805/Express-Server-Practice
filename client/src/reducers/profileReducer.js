@@ -3,40 +3,40 @@ import {GET_PROFILE, GET_PROFILES, PROFILE_LOADING, CLEAR_CURRENT_PROFILE} from 
 const initialState = {
     profile: null,
     profiles : null,
-    loading : false, // will fetch profiles: once profiles fetched, this should reset back to initial state of false
+    loading : false
     
 };
 
 export default function (state= initialState, action) {
     switch(action.type){
 
-        case PROFILE_LOADING:   //all this case does is define that the profile is loading
+        case PROFILE_LOADING:
             return{
                 ...state,
-                loading: true,
+                loading: true
             };
 
-        case GET_PROFILE:       //this will get the profile while the PROFILE_LOADING case runs
+        case GET_PROFILE:
             return{
                 ...state,
                 profile: action.payload,
-                loading: false // profile was grabbed so.. loading == false
+                loading: false
             };
 
         case GET_PROFILES:
             return{
                 ...state,
                 profiles: action.payload,
-                loading: false //get rid of the spinner
+                loading: false
             };
 
         case CLEAR_CURRENT_PROFILE:
             return{
                 ...state,
-                profile: null,
+                profile: null
             };
 
         default:
-            return state
+            return state;
     }
 }

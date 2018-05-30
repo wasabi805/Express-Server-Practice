@@ -15,6 +15,4 @@ const store = createStore(
     )
 );
 
-console.log('TEST');
-
 export default store;
